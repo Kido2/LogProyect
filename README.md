@@ -1,2 +1,3 @@
 # LogProyect
-Logica para la ciencias de lac omputacion
+Logica para la ciencias de la computacion
+Horario
