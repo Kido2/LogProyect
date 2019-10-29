@@ -139,7 +139,7 @@ def export_horario(diccionario,professor1,professor2,signature1,signature2,filen
 
     ''' Se ha creado la base del Horario, Lineas nombres, horas, pero vacio '''
 
-    # ----- Código que Añade las horas respectivas Carlos, Aqui. ---NO TOCAR otras secciones de codigo
+    
 
     for x in diccionario.keys():
         if diccionario[x]==1:
