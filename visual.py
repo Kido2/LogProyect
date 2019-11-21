@@ -31,6 +31,45 @@ def checkSquare(draw,fontobject,square,name,color):
 
     draw.text((x+20,y+20),name,(0,0,0),font=fontobject) #black text
 
+
+def checkBothSquare(draw,fontobject,square,name1,name2,color1,color2):
+    if square < 11: #Before Lunch
+        square_y = (square-1)//5
+        square_x = (square-1)%5
+
+        x = square_x*100+100
+        y = square_y*70+70
+
+        draw.rectangle([(x,y),(x+100,y+35)],fill=color1)
+
+        draw.rectangle([(x,y+35),(x+100,y+70)],fill=color2)
+
+        
+
+
+    else: #Post-Lunch
+        square_y = (square-1)//5
+        square_x = (square-1)%5
+
+        square_y += 1#We skipping lunch so y+1
+
+
+        x = square_x*100+100
+        y = square_y*70+70
+        
+        draw.rectangle([(x,y),(x+100,y+35)],fill=color1)
+        draw.rectangle([(x,y+35),(x+100,y+70)],fill=color2)
+        
+        
+
+
+    draw.text((x+20,y+10),name1,(0,0,0),font=fontobject) #black text
+    draw.text((x+20,y+35),name2,(0,0,0),font=fontobject) #black text
+    
+    
+
+
+    
 def checkSignature(draw,fontobject,number,color):
     '''Same as checkSquare but for square 41, 42, 43 and 44 '''
     number -= 41 #Number is now 0,1,2,3
@@ -45,23 +84,12 @@ def checkSignature(draw,fontobject,number,color):
 
     draw.text((x+30,y+15),'X',(0,0,0),font=fontobject)
 
-
-
-
-'''Changeable Variables '''
-signature1 = 'Kurt'
-signature2 = 'Bernand'
-professor1 = 'Lógica I'
-professor2 = 'Lógica II'
-filename = 'test' #nombre de .jpg a salir
-
-
 def export_horario(diccionario,professor1,professor2,signature1,signature2,filename):
 
     filename += '.jpg' #Para que sea una imagen
     '''Se crea la base del horario, es decir el horario vacío '''
 
-    '''Define Some const'''
+
     width = 900
     height = 420
 
@@ -80,7 +108,6 @@ def export_horario(diccionario,professor1,professor2,signature1,signature2,filen
     red = (255, 0, 0)
     green = (0,128,0)
 
-    '''Actual Colors '''
 
     image = Image.new('RGB',(width,height),white)
     draw = ImageDraw.Draw(image) #Allows us to draw
@@ -139,20 +166,23 @@ def export_horario(diccionario,professor1,professor2,signature1,signature2,filen
 
     ''' Se ha creado la base del Horario, Lineas nombres, horas, pero vacio '''
 
-    
-
     for x in diccionario.keys():
-        if diccionario[x]==1:
-            if x<=20:
-                checkSquare(draw,smallfont,   x , professor1, lightblue)
-            elif x>20 and x<41:
-                x=x-20
-                checkSquare(draw,smallfont,   x , professor2, lightblue)
-            else:
-                checkSignature(draw,bigfont,     x    ,lightblue)
+        if x < 21:
+            if diccionario[x] == 1 and diccionario[x+20] == 1:
+                checkBothSquare(draw,smallfont,x,signature1,signature2,lightgreen,lightblue)
+                diccionario[x+20] = 0 #already drawn
 
+            elif diccionario[x] == 1:
+                checkSquare(draw,smallfont,x,signature1,lightgreen)
 
+        elif x < 41:
+            if diccionario[x] == 1:
+                checkSquare(draw,smallfont,x-20,signature2,lightblue)
 
+        else:
+            if diccionario[x] == 1:
+                checkSignature(draw,bigfont,x,white)
+        
 
 
 
@@ -161,6 +191,8 @@ def export_horario(diccionario,professor1,professor2,signature1,signature2,filen
 
     #Se guarda la imagen
     image.save(filename)
+
+
 
 
 
