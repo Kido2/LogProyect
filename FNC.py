@@ -38,7 +38,7 @@ def enFNC(A):
         # print('q', q)
         r = A[5]
         # print('r', r)
-        B = q+"O"+p+"Y-"+r+"O"+p+"Y-"+q+"O"+r+"O-"+p
+        B = '-'+q+"O"+p+"Y-"+r+"O"+p+"Y-"+q+"O"+r+"O-"+p
     else:
         print(u'Error enENC(): Fórmula incorrecta!')
 
